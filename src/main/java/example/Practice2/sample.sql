@@ -1,0 +1,8 @@
+DROP DATABASE IF EXISTS mydb0903;
+CREATE DATABASE mydb0903;
+USE mydb0903;
+CREATE table test(
+    no int PRIMARY KEY AUTO_INCREMENT , 
+    content VARCHAR(255) , 
+    writer VARCHAR(225)
+);
