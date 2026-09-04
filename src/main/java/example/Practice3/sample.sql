@@ -1,0 +1,12 @@
+DROP DATABASE IF EXISTS mydb0903;
+CREATE DATABASE mydb0903;
+USE mydb0903;
+
+CREATE TABLE movie(
+    no INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(100) NOT NULL,
+    director VARCHAR(50) NOT NULL,
+    releasedate DATE,
+    rating INT,
+    createdate DATETIME
+);
