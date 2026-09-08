@@ -3,6 +3,7 @@ package example.EcoCloset;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -40,7 +41,7 @@ public class ClothesEntity extends BaseTime {
     private CategoriesEntity categoriesEntity;
 
     // 양방향 착용기록 테이블
-    @OneToMany( mappedBy = "clothesEntity")
+    @OneToMany( mappedBy = "clothesEntity" , cascade = CascadeType.REMOVE)
     @ToString.Exclude
     @Builder.Default    
     private List<WearLogEntity> wearLogEntity = new ArrayList<>(); 
