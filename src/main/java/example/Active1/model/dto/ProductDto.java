@@ -17,7 +17,7 @@ public class ProductDto {
     private Integer price;
     private Integer cno;
 
-    @Builder .Default
+    @Builder.Default
     private List<ReviewDto> reviewDtos = new ArrayList<>();
 
     // toEntity

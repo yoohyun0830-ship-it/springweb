@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import example.Active1.model.dto.ReviewDto;
 import example.Active1.model.entity.ProductEntity;
 import example.Active1.model.entity.ReviewEntity;
+import example.Active1.model.repository.ProductRepository;
 import example.Active1.model.repository.ReviewRepository;
 
 @Service 
@@ -17,7 +18,7 @@ public class ReviewService {
     private ReviewRepository reviewRepository;
 
     @Autowired 
-    private ProductRepository ProductRepository;
+    private ProductRepository productRepository;
 
     // 1. 제품별 리뷰 전체 조회
     public List<ReviewDto>reviewPrint(int bno){
@@ -28,16 +29,9 @@ public class ReviewService {
         List<ReviewDto>reviewDtos = new ArrayList<>();
 
         // Entity -> DTO
-        for(ReviewEntity reviewEntity : reviewEntities){
-            ReviewDto reviewDto =  ReviewDto.builder()
-                    .rno(reviewEntity.getRno())
-                    .bno(reviewEntity.getProductEntity().getBno())
-                    .reviewer(reviewEntity.getReviewer())
-                    .content(reviewEntity.getContent())
-                    .rating(reviewEntity.getRating())
-                    .build();
-
-                reviewDtos.add(reviewDto);
+        for (ReviewEntity reviewEntity : reviewEntities) {
+            ReviewDto reviewDto = ReviewDto.from(reviewEntity);
+            reviewDtos.add(reviewDto);
         }
         return reviewDtos;
     }
@@ -45,18 +39,14 @@ public class ReviewService {
     // 2. 리뷰 등록
     public boolean reviewAdd(ReviewDto reviewDto){
         // bno에 해당하는 제품 찾기
-        ProductEntity productEntity = productRepository.findId(reviewDto.getBno()).orElse(null);
+        ProductEntity productEntity = productRepository.findById(reviewDto.getBno()).orElse(null);
         // 제품이 존재하지 않으면 등록 실패
-        if(poductEntity == null){
+        if(productEntity == null){
             return false;
         }
         // DTO -> Entity
-        ReviewEntity reviewEntity = ReviewEntity.builder()
-                .productEntity(productEntity)
-                .reviewer(reviewDto.getReviewer())
-                .content(reviewDto.getContent())
-                .rating(reviewDto.getRating())
-                .build();
+        ReviewEntity reviewEntity = reviewDto.toEntity(productEntity);
+        
         // 리뷰저장
         ReviewEntity savedEntity = reviewRepository.save(reviewEntity);
 
@@ -77,7 +67,7 @@ public class ReviewService {
             return false;
         }
         // 리뷰삭제
-        reviewRepository.deleteAllId(rno);
+        reviewRepository.deleteById(rno);
         return true;
     }
 }
