@@ -5,8 +5,9 @@ import org.springframework.stereotype.Repository;
 
 import example.Practice5.model.entity.CommentEntity;
 
-@Repository
+@Repository 
 public interface CommentRepository
-        extends JpaRepository<CommentEntity, Integer> {
+    extends JpaRepository<CommentEntity,Integer> {
 
-}
+    
+} 

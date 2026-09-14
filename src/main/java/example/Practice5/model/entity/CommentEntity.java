@@ -1,5 +1,8 @@
 package example.Practice5.model.entity;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import example.Practice5.model.service.CommentService;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,24 +16,27 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity @Table(name = "comment")
-@NoArgsConstructor @AllArgsConstructor 
-@Builder @Data 
+@Entity 
+@Table(name = "comment")
+@NoArgsConstructor 
+@AllArgsConstructor 
+@Builder 
+@Data 
 public class CommentEntity extends BaseTime {
+  
     @Id 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Integer id;
-    
-    @Column
+    @Column 
     private String author;
     @Column 
     private String password;
     @Column 
     private String content;
 
-// -- FK : 게시물번호 ----
-    // 각 댓글은 특정 게시글에 소속
     @JoinColumn(name = "board_id")
-    @ManyToOne 
-    private BoardEntity boardEntity;
+    @ManyToOne
+    private BoardEntity boardEntity; 
+
 }

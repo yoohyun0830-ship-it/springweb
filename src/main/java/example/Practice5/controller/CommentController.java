@@ -14,19 +14,21 @@ import example.Practice5.model.service.CommentService;
 @RestController 
 @RequestMapping("/api/board/comments")
 public class CommentController {
-    @Autowired private CommentService commentService;
+@Autowired private CommentService commentService;
 
-    @PostMapping("")
-    public boolean 댓글등록( 
-        @RequestBody CommentDto commentDto){
-        return commentService.댓글등록(commentDto);
+// 1. 댓글 등록
+@PostMapping("")
+public boolean 댓글등록(@RequestBody CommentDto commentDto){
+    return commentService.댓글등록(commentDto);
+}
+
+// 2. 댓글삭제
+@DeleteMapping 
+public boolean 댓글삭제(
+    @RequestParam (name = "commentId") Integer commentId,
+    @RequestParam (name = "password") String password){
+        return commentService.댓글삭제(commentId,password);
     }
-    
-    @DeleteMapping 
-    public boolean 댓글삭제(
-         @RequestParam(name = "commentId") Integer commentId ,
-         @RequestParam (name = "password") String password ){
-            return commentService.댓글삭제(
-                commentId, password);
-      }
+
+
 }
