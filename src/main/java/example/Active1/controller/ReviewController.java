@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController 
-@RequestMapping("/api/rivews")
+@RequestMapping("/api/reviews")
 public class ReviewController {
     @Autowired 
     private ReviewService reviewService;
@@ -25,7 +25,7 @@ public class ReviewController {
     // 1. 제품별 리뷰 전체조회
     @GetMapping("")
     public List<ReviewDto> reviewPrint(@RequestParam int bno){
-        return reviewService.reviewPrint(bno;)
+        return reviewService.reviewPrint(bno);
     }
      
     // 2. 리뷰등록
