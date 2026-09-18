@@ -11,10 +11,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
+
 
 @Entity @Table(name = "review")
-@Data  @ToString @Builder 
+@Data  @Builder 
 @NoArgsConstructor 
 @AllArgsConstructor 
 public class ReviewEntity {

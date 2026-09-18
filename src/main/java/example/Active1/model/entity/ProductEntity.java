@@ -3,7 +3,7 @@ package example.Active1.model.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import example.EcoCloset.CategoriesEntity;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,24 +18,27 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@Entity @Table(name = "product")
-@AllArgsConstructor 
-@NoArgsConstructor 
-@Builder 
-@Data 
+@Entity
+@Table(name = "product")
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Data
 public class ProductEntity {
-    @Id 
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
-    private int bno;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer bno;
+
     private String name;
     private Integer price;
 
-    @ManyToOne 
+    @ManyToOne
     @JoinColumn(name = "cno")
-    private CategoriesEntity categoriesEntity;
+    private CategoryEntity categoryEntity;
 
-    @OneToMany(mappedBy = "productEntity")
+    @OneToMany(mappedBy = "productEntity", cascade = CascadeType.ALL)
     @ToString.Exclude
     @Builder.Default
-    private List<ReviewEntity>reviewEntities = new ArrayList<>();
+    private List<ReviewEntity> reviewEntities = new ArrayList<>();
 }

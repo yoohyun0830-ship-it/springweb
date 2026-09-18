@@ -10,43 +10,65 @@ import example.Active1.model.entity.CategoryEntity;
 import example.Active1.model.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 
-@Service 
-@RequiredArgsConstructor 
+@Service
+@RequiredArgsConstructor
 public class CategoryService {
-     
-     // 1. 카테고리 등록
-        public CategoryDto createCategory(CategoryDto dto) {
-            CategoryEntity entity = CategoryEntity.builder()
-            .name(dto.getName())
-            .build();
 
-            CategoryEntity saved = categoryRepository.save(entity);
+    private final CategoryRepository categoryRepository;
 
-            return CategoryDto.builder()
-            .cno(saved.getCno())
-            .name(saved.getName())
-            .build();
-        }
+
+    // 1. 카테고리 등록
+    public CategoryDto createCategory(CategoryDto categoryDto) {
+
+        // DTO -> Entity
+        CategoryEntity categoryEntity =
+                categoryDto.toEntity();
+
+        // 저장
+        CategoryEntity savedEntity =
+                categoryRepository.save(categoryEntity);
+
+        // Entity -> DTO
+        return CategoryDto.from(savedEntity);
+    }
+
 
     // 2. 카테고리 전체 조회
     public List<CategoryDto> getAllCategories() {
-        List<CategoryEntity> entityList = CategoryRepository.findAll();
-        List<CategoryDto> dtoList = new ArrayList<>();
-        for (CategoryEntity entity : entityList) {
-            dtoList.add(CategoryDto.builder()
-                    .cno(entity.getCno())
-                    .name(entity.getName())
-                    .build());
+
+        // 카테고리 전체 조회
+        List<CategoryEntity> categoryEntities =
+                categoryRepository.findAll();
+
+        // DTO 여러개 저장할 리스트
+        List<CategoryDto> categoryDtos =
+                new ArrayList<>();
+
+        // Entity -> DTO
+        for (CategoryEntity categoryEntity : categoryEntities) {
+
+            CategoryDto categoryDto =
+                    CategoryDto.from(categoryEntity);
+
+            categoryDtos.add(categoryDto);
         }
-        return dtoList;
+
+        return categoryDtos;
     }
+
 
     // 3. 카테고리 삭제
     public boolean deleteCategory(Integer cno) {
+
+        // 해당 카테고리가 존재하는지 확인
         if (categoryRepository.existsById(cno)) {
+
+            // 카테고리 삭제
             categoryRepository.deleteById(cno);
+
             return true;
         }
+
         return false;
     }
 }

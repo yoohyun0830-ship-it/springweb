@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import example.Active1.model.dto.ReviewDto;
 import example.Active1.model.service.ReviewService;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,8 +17,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
+@CrossOrigin (value = "http://localhost:5173")
 @RestController 
-@RequestMapping("/api/reviews")
+@RequestMapping ("/api/reviews")
 public class ReviewController {
     @Autowired 
     private ReviewService reviewService;
